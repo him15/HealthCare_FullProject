@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "APPOINTMENT-SERVICE", url = "http://localhost:8081")
+@FeignClient(name = "APPOINTMENT-SERVICE", url = "http://localhost:8084")
 public interface AppointmentFeignClient {
 
     @GetMapping("/appointments/getAll")
     List<AppointmentDTO> findAll();
 
+    // ✅ This is the one you need
     @GetMapping("/appointments/byPatient/{cin}")
-    List<AppointmentDTO> findAllByPatient(@PathVariable String cin);
+    List<AppointmentDTO> findAllByPatient(@PathVariable("cin") String cin);
 }

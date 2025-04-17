@@ -4,7 +4,7 @@ import com.healthcare.appointmentservice.dtos.PatientDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "PATIENT-SERVICE", url = "http://localhost:8080")
+@FeignClient(name = "PATIENT-SERVICE", url = "http://localhost:8083")
 public interface PatientFeignClient {
 
     @PostMapping("/patient/add")

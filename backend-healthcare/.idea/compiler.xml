@@ -2,7 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Annotation profile for appointment-service" enabled="true">
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Annotation profile for patientservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -13,12 +14,19 @@
         <module name="doctorservice" />
         <module name="patientservice" />
       </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="eureka-server" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="appointment-service" options="-parameters" />
       <module name="doctorservice" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
       <module name="patientservice" options="-parameters" />
     </option>
   </component>

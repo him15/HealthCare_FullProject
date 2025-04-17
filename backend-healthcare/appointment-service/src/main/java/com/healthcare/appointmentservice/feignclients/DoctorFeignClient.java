@@ -10,4 +10,7 @@ public interface DoctorFeignClient {
 
     @GetMapping("/doctor/findByName/{name}")
     DoctorDTO findByName(@PathVariable String name);
+
+    @GetMapping("/doctor/getByCin/{cin}")
+    DoctorDTO findByCin(@PathVariable("cin") String cin);
 }

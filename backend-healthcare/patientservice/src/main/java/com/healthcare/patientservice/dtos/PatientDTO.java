@@ -17,4 +17,60 @@ public class PatientDTO {
     private Integer age;
     private String gender;
     private List<AppointmentDTO> appointmentList;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCin() {
+        return cin;
+    }
+
+    public void setCin(String cin) {
+        this.cin = cin;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public List<AppointmentDTO> getAppointmentList() {
+        return appointmentList;
+    }
+
+    public void setAppointmentList(List<AppointmentDTO> appointmentList) {
+        this.appointmentList = appointmentList;
+    }
 }
