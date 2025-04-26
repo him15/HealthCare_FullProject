@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  eureka-server:
+    build:
+      context: ./eureka-server  # Folder jahan Eureka ka Dockerfile hai
+    ports:
+      - "8761:8761"
+    networks:
+      - healthcare-network
+
+  api-gateway:
+    build:
+      context: ./api-gateway  # Folder jahan API Gateway ka Dockerfile hai
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+    networks:
+      - healthcare-network
+
+  doctor-service:
+    build:
+      context: ./doctorservice
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+    networks:
+      - healthcare-network
+
+  patient-service:
+    build:
+      context: ./patientservice
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka-server
+    networks:
+      - healthcare-network
+
+  appointment-service:
+    build:
+      context: ./appointment-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+    networks:
+      - healthcare-network
+
+networks:
+  healthcare-network:
+    driver: bridge
