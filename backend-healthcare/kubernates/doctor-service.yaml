@@ -1,0 +1,86 @@
+# Secret: Doctor service DB password
+apiVersion: v1
+kind: Secret
+metadata:
+  name: doctor-service-secret
+  namespace: healthcare
+type: Opaque
+data:
+  spring-datasource-password: aGltYW5zaHU=  # base64 of "himanshu"
+
+---
+
+# ConfigMap: DB URL, user, and Eureka discovery URL
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: doctor-service-config
+  namespace: healthcare
+data:
+  spring-datasource-url: jdbc:mysql://doctor-mysql:3306/doctordb
+  spring-datasource-username: root
+  eureka-client-service-url-defaultZone: http://eureka-service:8761/eureka
+
+---
+
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doctor-service
+  namespace: healthcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doctor-service
+  template:
+    metadata:
+      labels:
+        app: doctor-service
+    spec:
+      containers:
+        - name: doctor-service
+          image: him1502/doctor-service:v1
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: doctor-service-config
+                  key: spring-datasource-url
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: doctor-service-config
+                  key: spring-datasource-username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: doctor-service-secret
+                  key: spring-datasource-password
+
+            - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: doctor-service-config
+                  key: eureka-client-service-url-defaultZone
+
+---
+
+# ClusterIP Service (internal access within Kubernetes)
+apiVersion: v1
+kind: Service
+metadata:
+  name: doctor-service
+  namespace: healthcare
+spec:
+  selector:
+    app: doctor-service
+  ports:
+    - port: 8082
+      targetPort: 8082
+  type: ClusterIP
