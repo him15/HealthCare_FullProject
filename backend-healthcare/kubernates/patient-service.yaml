@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: doctor-service
+  name: patient-service
   namespace: healthcare
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: doctor-service
+      app: patient-service
   template:
     metadata:
       labels:
-        app: doctor-service
+        app: patient-service
     spec:
       containers:
-        - name: doctor-service
-          image: him1502/doctor-service:v1
+        - name: patient-service
+          image: him1502/patient-service:v1
           ports:
-            - containerPort: 8082
+            - containerPort: 8083
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql:3306/doctordb
+              value: jdbc:mysql://mysql:3306/patientdb
             - name: SPRING_DATASOURCE_USERNAME
               value: root
             - name: SPRING_DATASOURCE_PASSWORD
@@ -31,17 +31,15 @@ spec:
             - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
               value: http://eureka-service:8761/eureka
 ---
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: doctor-service
+  name: patient-service
   namespace: healthcare
 spec:
   selector:
-    app: doctor-service
+    app: patient-service
   ports:
-    - name: http
-      port: 8082         # Port exposed within cluster
-      targetPort: 8082   # Port inside the container
+    - port: 8083
+      targetPort: 8083
   type: ClusterIP
