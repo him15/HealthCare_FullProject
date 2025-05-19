@@ -15,12 +15,19 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: him1502/api-gateway:v1  # Replace with your actual DockerHub image
+          image: him1502/api-gateway:v1
           ports:
             - containerPort: 8081
           env:
             - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
               value: http://eureka-service:8761/eureka
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
 ---
 apiVersion: v1
 kind: Service

@@ -29,6 +29,13 @@ spec:
               mountPath: /docker-entrypoint-initdb.d
             - mountPath: /var/lib/mysql
               name: mysql-data
+          resources:                            # ✅ ADD THIS SECTION
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
       volumes:
         - name: initdb
           configMap:
@@ -36,7 +43,6 @@ spec:
         - name: mysql-data
           persistentVolumeClaim:
             claimName: mysql-pvc
-
 ---
 apiVersion: v1
 kind: Service
