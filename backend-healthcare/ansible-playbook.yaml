@@ -1,0 +1,16 @@
+---
+- name: Apply Kubernetes manifests via roles
+  hosts: localhost
+  remote_user: himanshu-shivhare
+  become: false
+  roles:
+    - database
+    - pgadmin
+    - patient_service
+    - doctor_service
+    - appointment_service
+    - gateway
+    - monitoring
+    - tracing
+    - hpa
+
